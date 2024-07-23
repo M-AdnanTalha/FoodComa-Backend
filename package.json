@@ -1,0 +1,19 @@
+{
+  "name": "expressstarter",
+  "version": "1.0.0",
+  "description": "This is description",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx nodemon src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongodb": "^6.8.0",
+    "mongoose": "^8.5.1",
+    "node": "^22.5.1",
+    "nodemon": "^3.1.4"
+  }
+}
