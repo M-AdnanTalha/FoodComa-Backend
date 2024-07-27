@@ -3,6 +3,8 @@ const express = require('express');
 const ServerConfig = require('./config/serverConfig');
 const connectDB = require('./config/dbConfig');
 const User = require('./schema/userSchema');
+const userRouter = require('./routes/userRoute');
+const { cartRouter } = require('./routes/cartRoute');
 
 
 const app = express();
@@ -11,6 +13,9 @@ const app = express();
 app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({extended:true}));
+
+app.use('/users',userRouter); // Connects the router to the server
+app.use('/cart',cartRouter); 
 
 app.post('/ping',(req,res)=>{
     console.log(req.body);
@@ -21,16 +26,16 @@ app.listen(ServerConfig.PORT , async ()=>{
     await connectDB();
     console.log(`Server started at port ${ServerConfig.PORT}!!!`);
 
-    const newUser = await User.create({
-        email:'a@b.com',
-        password:'123456',
-        firstName:"joe",
-        lastName:"don",
-        mobileNumber:'123456789'
-    });
+    // const newUser = await User.create({
+    //     email:'a@b.com',
+    //     password:'123456',
+    //     firstName:"joe",
+    //     lastName:"don",
+    //     mobileNumber:'123456789'
+    // });
 
-    console.log("Created a new user");
-    console.log(newUser);
+    // console.log("Created a new user");
+    // console.log(newUser);
 });
 
 
