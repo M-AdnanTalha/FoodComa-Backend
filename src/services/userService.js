@@ -1,13 +1,10 @@
-class UserService{
+const { findUser, createUser } = require("../repositories/userRepository");
 
-    constructor(_userRepository){
-        this.userRepository = _userRepository;
-    }
 
-    async registerUser(userDetails) {
+    async function registerUser(userDetails) {
         console.log("Hitting Service Layer")
         // Check whether the email or phone number is already registerd or not
-        const user = await this.userRepository.findUser({
+        const user = await findUser({
             email: userDetails.email,
             mobileNumber: userDetails.mobileNumber
         });
@@ -16,7 +13,7 @@ class UserService{
             throw {reason : 'User with this email and mobile number already exists' , statusCode:400}
         }
         // If not then register the user
-        const newUser = this.userRepository.createUser({
+        const newUser = await createUser({
             email:userDetails.email,
             firstName:userDetails.firstName,
             lastName:userDetails.lastName,
@@ -30,9 +27,10 @@ class UserService{
         // Return the details of the user
         return newUser;
     }
-}
 
-module.exports = UserService;
+module.exports = {
+    registerUser
+}
 
 //vsftS2wc8XHRVGu3;.......................
 
