@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config/serverConfig');
-const { decode } = require('punycode');
+//deleted punycode - decode (probably was mistake)
 
 async function isLoggedIn(req,res,next) {
     const token = req.cookies["authToken"];
