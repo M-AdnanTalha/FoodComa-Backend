@@ -11,7 +11,7 @@ const { isLoggedIn } = require('./validation/authValidator');
 const uploader = require('./middlewares.js/multerMiddleware');
 const cloudinary = require('./config/cloudinaryConfig');
 const fs = require('fs/promises');
-//const { uploader } = require('./config/cloudinaryConfig');
+const productRouter = require('./routes/productRoute');
 
 
 const app = express();
@@ -25,6 +25,7 @@ app.use(express.urlencoded({extended:true}));
 app.use('/users',userRouter); // Connects the router to the server
 app.use('/cart',cartRouter); 
 app.use('/auth',authRouter);
+app.use('/products',productRouter);
 
 app.get('/ping',isLoggedIn,(req,res)=>{
     console.log(req.body);
@@ -36,7 +37,7 @@ app.post('/photo',uploader.single('incomingFile'),async(req,res)=>{
     console.log(req.file);
     const result = await cloudinary.uploader.upload(req.file.path);
     console.log("result from cloudinary",result);
-    fs.unlink(req.file.path)
+    await fs.unlink(req.file.path)
     return res.json({
         message:"OK"
     })
@@ -46,16 +47,6 @@ app.listen(ServerConfig.PORT , async ()=>{
     await connectDB();
     console.log(`Server started at port ${ServerConfig.PORT}!!!`);
 
-    // const newUser = await User.create({
-    //     email:'a@b.com',
-    //     password:'123456',
-    //     firstName:"joe",
-    //     lastName:"don",
-    //     mobileNumber:'123456789'
-    // });
-
-    // console.log("Created a new user");
-    // console.log(newUser);
 });
 
 
