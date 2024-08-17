@@ -83,7 +83,7 @@ async function deleteProduct(req,res){
             });
         }
         console.log(error)
-            return res.statuc(500).json({
+            return res.status(500).json({
                 success:false,
                 message:'Something went wrong',
                 data:{},
