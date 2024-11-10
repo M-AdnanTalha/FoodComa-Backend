@@ -27,7 +27,10 @@ async function loginUser(authDetails){
     const token = jwt.sign({email : user.email , id : user._id , role: userRole }, JWT_SECRET,{
         expiresIn:JWT_EXPIRY
     });
-    return token;
+    return { token , userRole , userData:{
+        email: user.email,
+        firstName: user.firstName,
+    }};
 }
 
 module.exports = {
