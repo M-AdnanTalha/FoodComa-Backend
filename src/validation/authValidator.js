@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET , COOKIE_SECURE } = require('../config/serverConfig');
+const { JWT_SECRET , COOKIE_SECURE, FRONTEND_URL } = require('../config/serverConfig');
 const UnAuthorisedError = require('../utils/unauthorisedError');
 const { decode } = require('punycode');
 //deleted punycode - decode (probably was mistake)
@@ -37,8 +37,10 @@ async function isLoggedIn(req,res,next) {
         if(error.name === "TokenExpiredError") {
             res.cookie("authToken", "", {
                 httpOnly: true,
+                sameSite: "none",
                 secure: COOKIE_SECURE,
-                maxAge: 7 * 24 * 60 * 60 * 1000
+                maxAge: 7 * 24 * 60 * 60 * 1000,
+                domain: FRONTEND_URL
             });
             return res.status(200).json({
                 success: true,
