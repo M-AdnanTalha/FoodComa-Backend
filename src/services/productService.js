@@ -37,7 +37,7 @@ async function getProductByID(productID) {
 }
 
 async function getAllProductsData() {
-    const response = await ProductRespository.getAllProducts();
+    const response = await ProductRepository.getAllProducts();
     if(!response) {
         throw new NotFoundError('Product');
     }
