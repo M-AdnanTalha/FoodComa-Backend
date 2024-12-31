@@ -14,7 +14,7 @@ const orderRouter = require('./routes/orderRoutes');
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: ServerConfig.FRONTEND_URL, // allow to server to accept request from different origin
     credentials: true,
 }));
 

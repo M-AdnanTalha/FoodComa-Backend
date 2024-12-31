@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('../config/serverConfig');
+const { JWT_SECRET , COOKIE_SECURE } = require('../config/serverConfig');
 const UnAuthorisedError = require('../utils/unauthorisedError');
 const { decode } = require('punycode');
 //deleted punycode - decode (probably was mistake)
 
 async function isLoggedIn(req,res,next) {
+    console.log("Inside isLoggedIn", req.cookies);
     const token = req.cookies["authToken"];
     console.log(token);
     if(!token){
@@ -36,7 +37,7 @@ async function isLoggedIn(req,res,next) {
         if(error.name === "TokenExpiredError") {
             res.cookie("authToken", "", {
                 httpOnly: true,
-                secure: false,
+                secure: COOKIE_SECURE,
                 maxAge: 7 * 24 * 60 * 60 * 1000
             });
             return res.status(200).json({
